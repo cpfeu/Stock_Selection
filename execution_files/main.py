@@ -35,7 +35,7 @@ def main():
 
     # evaluate twitter data
     twitter_evaluator = TwitterEvaluator()
-    twitter_evaluator.count_company_ticker_occurences()
+    twitter_evaluator.count_company_ticker_occurrences()
 
     # pick top stocks from twitter data
     twitter_stock_picker = TwitterStockPicker(num_top_stocks=ExecutionParameters.num_top_stocks)

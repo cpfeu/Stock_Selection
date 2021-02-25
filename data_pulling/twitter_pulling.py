@@ -17,6 +17,10 @@ class TwitterPuller:
         self.access_token = GlobalConfig.TWITTER_ACCESS_TOKEN
         self.access_token_secret = GlobalConfig.TWITTER_ACCESS_TOKEN_SECRET
 
+        # create directory and delete old files
+        os.makedirs('../data/twitter_dicts', exist_ok=True)
+        for file in os.listdir('../data/twitter_dicts'):
+            os.remove(os.path.join('../data/twitter_dicts', file))
 
     def pull_twitter_data(self):
 

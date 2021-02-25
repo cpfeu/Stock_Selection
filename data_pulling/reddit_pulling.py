@@ -1,6 +1,6 @@
+import os
 import praw
 import json
-import multiprocessing
 from datetime import datetime
 from configurations.global_config import GlobalConfig
 
@@ -19,6 +19,10 @@ class RedditPuller:
         self.time_to = datetime.strptime(time_to, '%Y-%m-%d %H:%M:%S')
         self.reddit_limit = reddit_limit
 
+        # create directory and delete old files
+        os.makedirs('../data/reddit_dicts', exist_ok=True)
+        for file in os.listdir('../data/reddit_dicts'):
+            os.remove(os.path.join('../data/reddit_dicts', file))
 
     def pull_reddit_data(self):
 

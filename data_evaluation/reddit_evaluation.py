@@ -1,7 +1,6 @@
 import os
 import json
 import multiprocessing
-from operator import itemgetter
 from configurations.global_config import GlobalConfig
 
 
@@ -12,6 +11,10 @@ class RedditEvaluator:
         with open('../data/company_names_dict.json', 'r') as file:
             self.company_names_dict = json.load(file)
 
+        # create directory and delete old files
+        os.makedirs('../data/reddit_evaluation_dicts', exist_ok=True)
+        for file in os.listdir('../data/reddit_evaluation_dicts'):
+            os.remove(os.path.join('../data/reddit_evaluation_dicts', file))
 
     def count_company_ticker_occurrences(self):
 
@@ -25,12 +28,8 @@ class RedditEvaluator:
         with multiprocessing.Pool(GlobalConfig.NUM_CPUS) as mp:
             mp.starmap(self.count_company_ticker_occurrences_worker, arg_list)
 
-
-
     def count_company_name_occurrences(self):
         pass
-
-
 
     @classmethod
     def count_company_ticker_occurrences_worker(cls, reddit_dict_name, company_ticker_list):

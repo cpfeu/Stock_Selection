@@ -10,8 +10,12 @@ class TwitterEvaluator:
         with open('../data/company_names_dict.json', 'r') as file:
             self.company_names_dict = json.load(file)
 
+        # create directory and delete old files
+        os.makedirs('../data/twitter_evaluation_dicts', exist_ok=True)
+        for file in os.listdir('../data/twitter_evaluation_dicts'):
+            os.remove(os.path.join('../data/twitter_evaluation_dicts', file))
 
-    def count_company_ticker_occurences(self):
+    def count_company_ticker_occurrences(self):
 
         # load twitter_dict
         with open('../data/twitter_dicts/' + self.twitter_dict_name, 'r') as file:
