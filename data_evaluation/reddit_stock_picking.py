@@ -11,7 +11,6 @@ class RedditStockPicker:
         self.num_top_stocks = num_top_stocks
         self.reddit_evaluation_dicts_name_list = os.listdir('../data/reddit_evaluation_dicts')
 
-
     def pick_top_stocks(self):
 
         # create argument list for multiprocessing worker
@@ -22,9 +21,8 @@ class RedditStockPicker:
         with multiprocessing.Pool(GlobalConfig.NUM_CPUS) as mp:
             mp.starmap(self.pick_top_stocks_worker, arg_list)
 
-
-    @classmethod
-    def pick_top_stocks_worker(cls, reddit_evaluation_dict_name, num_top_stocks):
+    @staticmethod
+    def pick_top_stocks_worker(reddit_evaluation_dict_name, num_top_stocks):
 
         # extract subreddit name
         subreddit_name = reddit_evaluation_dict_name[:-29]

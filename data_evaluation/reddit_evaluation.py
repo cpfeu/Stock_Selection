@@ -31,8 +31,8 @@ class RedditEvaluator:
     def count_company_name_occurrences(self):
         pass
 
-    @classmethod
-    def count_company_ticker_occurrences_worker(cls, reddit_dict_name, company_ticker_list):
+    @staticmethod
+    def count_company_ticker_occurrences_worker(reddit_dict_name, company_ticker_list):
 
         # load reddit_dict
         with open('../data/reddit_dicts/' + reddit_dict_name, 'r') as file:
@@ -44,7 +44,7 @@ class RedditEvaluator:
         # iterate over each ticker
         for idx, ticker in enumerate(company_ticker_list):
             if idx % 1000 == 0:
-                print('Searching for ticker with index ' + str(idx) + ' out of around 7000...')
+                print('Searching for ticker with index ' + str(idx) + ' out of over 7000...')
 
             # add ticker to count dictionary
             count_dict.update({ticker: 0})

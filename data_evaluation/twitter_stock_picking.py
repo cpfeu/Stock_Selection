@@ -10,7 +10,6 @@ class TwitterStockPicker:
         self.num_top_stocks = num_top_stocks
         self.twitter_evaluation_dict_name = os.listdir('../data/twitter_evaluation_dicts')[0]
 
-
     def pick_top_stocks(self):
 
         # load twitter evaluation dict

@@ -26,6 +26,8 @@ class RedditPuller:
 
     def pull_reddit_data(self):
 
+        starting_time = datetime.now()
+
         # loop over each subreddit that is queried
         for subreddit_name in self.subreddit_list:
 
@@ -46,32 +48,38 @@ class RedditPuller:
 
                     # check if reddit post is relevant for search query
                     reddit_post_timestamp = datetime.utcfromtimestamp(reddit_post.created_utc)
-                    if (reddit_post.stickied==False) and \
-                           (reddit_post_timestamp >= self.time_from) and \
-                           (reddit_post_timestamp <= self.time_to):
+                    if (reddit_post.stickied is False) and \
+                            (reddit_post_timestamp >= self.time_from) and \
+                            (reddit_post_timestamp <= self.time_to):
 
                         # fill reddit dictionary with information
                         reddit_dict.update({reddit_post.id: {GlobalConfig.REDDIT_POST_TITLE_STR: reddit_post.title,
                                                              GlobalConfig.REDDIT_POST_TEXT_STR: reddit_post.selftext,
                                                              GlobalConfig.REDDIT_POST_TIMESTAMP_STR:
                                                                  datetime.utcfromtimestamp(reddit_post.created_utc).
-                                                                    strftime('%Y-%m-%d %H:%M:%S'),
+                                                                 strftime('%Y-%m-%d %H:%M:%S'),
                                                              GlobalConfig.REDDIT_POST_NUM_UPS_STR: reddit_post.ups,
                                                              GlobalConfig.REDDIT_POST_NUM_DOWNS_STR: reddit_post.downs,
-                                                             GlobalConfig.REDDIT_POST_NUM_COMMENTS_STR: reddit_post.num_comments,
+                                                             GlobalConfig.REDDIT_POST_NUM_COMMENTS_STR:
+                                                                 reddit_post.num_comments,
                                                              GlobalConfig.REDDIT_POST_COMMENTS_STR: {}}})
 
                         reddit_post.comments.replace_more(limit=30)
                         reddit_post_comments = reddit_post.comments.list()
                         for reddit_post_comment in reddit_post_comments:
-                            reddit_dict.get(reddit_post.id).\
-                                get(GlobalConfig.REDDIT_POST_COMMENTS_STR).\
+                            reddit_dict.get(reddit_post.id). \
+                                get(GlobalConfig.REDDIT_POST_COMMENTS_STR). \
                                 update({reddit_post_comment.id: {
-                                GlobalConfig.REDDIT_COMMENT_TIMESTAMP_STR: datetime.utcfromtimestamp(reddit_post_comment.created_utc).
-                                                                            strftime('%Y-%m-%d %H:%M:%S'),
-                                GlobalConfig.REDDIT_COMMENT_TEXT_STR: reddit_post_comment.body}})
+                                    GlobalConfig.REDDIT_COMMENT_TIMESTAMP_STR: datetime.utcfromtimestamp(
+                                        reddit_post_comment.created_utc).strftime('%Y-%m-%d %H:%M:%S'),
+                                    GlobalConfig.REDDIT_COMMENT_TEXT_STR: reddit_post_comment.body}})
 
             # save reddit dict of current subreddit
             current_utc_timestamp_str = str(datetime.now().timestamp())
-            with open('../data/reddit_dicts/'+subreddit_name+'_reddit_dict_'+current_utc_timestamp_str+'.json', 'w') as file:
+            with open('../data/reddit_dicts/' + subreddit_name + '_reddit_dict_' + current_utc_timestamp_str + '.json',
+                      'w') as file:
                 json.dump(reddit_dict, file)
+
+        ending_time = datetime.now()
+
+        return (ending_time - starting_time).total_seconds()

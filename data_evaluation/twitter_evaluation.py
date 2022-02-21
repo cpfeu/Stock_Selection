@@ -29,7 +29,7 @@ class TwitterEvaluator:
 
         for idx, ticker in enumerate(company_ticker_list):
             if idx % 1000 == 0:
-                print('Searching for ticker with index ' + str(idx) + ' out of around 7000...')
+                print('Searching for ticker with index ' + str(idx) + ' out of over 7000...')
 
             # add ticker to count dictionary
             count_dict.update({ticker: 0})
