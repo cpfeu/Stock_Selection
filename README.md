@@ -73,6 +73,16 @@ step. After that the *main* function in the file
 The results will be stored in a folder called 
 *results* which will be 
 created during runtime. 
-Example outputs can be viewed in the *examples* folder.
 Further, the prediction rmse ist stored in the database
 if the user selected the option *store_in_db = True*.
+Example outputs can be viewed in the *examples* folder and may look like this:
+
+
+
+Auto-Correlation Example             |  Partial Auto-Correlation Example
+:-------------------------:|:-------------------------:
+![Auto-correlation](./example_outputs/auto_correlation_plot.png)  |  ![Partial auto-correlation](./example_outputs/partial_auto_correlation_plot.png)
+
+
+![Stock Price Prediction Plot](./example_outputs/stock_price_prediction.png)
+
